@@ -26,7 +26,7 @@ app.post("/api/todo-list", (req, res) => {
 const frontPath = path.join(__dirname, "docs");
 app.use(express.static(frontPath));
 
-app.get("*", (req, res) => {
+app.get("/", (req, res) => {
   res.sendFile(path.join(frontPath, "index.html"));
 });
 
