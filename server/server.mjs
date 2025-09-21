@@ -10,7 +10,6 @@ const app = express();
 app.use(cors());
 app.use(express.json()); 
 
-
 let todos = [];
 
 app.get("/api/todo-list", (req, res) => {
