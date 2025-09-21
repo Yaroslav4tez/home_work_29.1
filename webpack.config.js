@@ -7,7 +7,7 @@ module.exports = {
     path: path.resolve(__dirname, "docs"),
     filename: "bundle.[contenthash].js",
     clean: true,
-    publicPath: "/",            // для SPA у dev
+    publicPath: "/",       
   },
   mode: "development",
   devtool: "source-map",
@@ -15,7 +15,7 @@ module.exports = {
     port: 5500,
     open: true,
     hot: true,
-    liveReload: false,          // <- ключ
+    liveReload: false,         
     historyApiFallback: { disableDotRule: true },
     proxy: [{
       context: ['/api'],

@@ -1,0 +1,22 @@
+body {
+    background-color: rgb(102, 215, 215);
+}
+
+h1 {
+    text-align: center;
+}
+
+.todoContainer {
+    padding-left: 40px;
+}
+
+.imgContainer {
+  display: flex;
+  justify-content: center;
+}
+
+img {
+    width: 300px;
+    height: auto;
+    
+}

@@ -1,21 +1,25 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getAddTodo, getSetTodoList, getSetTodoText } from "./redux/actions";
+import { setIsLoading } from "./redux/loadingReducer";
+import { setNewTaskText } from "./redux/newTaskReducer";
+import { setList, addTodo } from "./redux/listReducer";
 
 export default () => {
  const todoList = useSelector(state => state.todo.list);
  const dispatch = useDispatch();
 
  const newTask = useSelector(state => state.todo.newTask);
+ const isLoading = useSelector(state => state.todo.isLoading);
+
 
  let calc = 0;
 
  const setTaskText = (e) => {
-  const action = getSetTodoText(e.target.value);
-  dispatch(action);
+  dispatch(setNewTaskText(e.target.value));
  }
 
   useEffect(() => {
+    dispatch(setIsLoading(true));
     fetch("/api/todo-list")
       .then(resp => resp.json())
       .then(data => {
@@ -24,12 +28,14 @@ export default () => {
         });
       })
       .then(list => {
-        const action = getSetTodoList(list);
+        const action = setList(list);
         dispatch(action);
+        dispatch(setIsLoading(false));
       });
   }, []);
 
   const addTask = () => {
+    dispatch(setIsLoading(true));
     fetch("/api/todo-list", {
       method: 'POST',
       headers: {
@@ -39,11 +45,15 @@ export default () => {
     })
     .then(resp => resp.json())
     .then(task => {
-      const addAction = getAddTodo(task);
+      const addAction = addTodo(task);
       dispatch(addAction);
-      const clearAction = getSetTodoText('');
-      dispatch(clearAction);
+      dispatch(setNewTaskText(""));
+      dispatch(setIsLoading(false));
     });
+  }
+
+  if (isLoading) {
+    return <div className="imgContainer"><img src="https://i.pinimg.com/736x/e0/36/64/e036647fd9ad4adbd4ebf347a9b409a7.jpg" alt="" /></div>
   }
 
   return <div>
@@ -51,6 +61,7 @@ export default () => {
       <input type="text" value={newTask.text} onChange={setTaskText}/>
       <button onClick={addTask}>Add</button>
     </div>
+    <div>
   <ul>
       {todoList.length ?
         todoList.map(item => {
@@ -60,6 +71,7 @@ export default () => {
         }) : 
         "No todos"}
     </ul>
+    </div>
     <div><footer>Всього {calc}</footer></div>
   </div> 
 }
