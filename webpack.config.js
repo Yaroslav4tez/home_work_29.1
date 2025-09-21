@@ -7,12 +7,13 @@ module.exports = {
     path: path.resolve(__dirname, "docs"),
     filename: "bundle.[contenthash].js",
     clean: true,
-    publicPath: "/",       
+    publicPath: "./",       
   },
   mode: "development",
   devtool: "source-map",
   devServer: {
     port: 5500,
+    host: "0.0.0.0",
     open: true,
     hot: true,
     liveReload: false,         
@@ -21,7 +22,8 @@ module.exports = {
       context: ['/api'],
       target: 'http://localhost:5555'
     }
-    ]
+    ],
+    allowedHosts: "all"
   },
   module: {
     rules: [
