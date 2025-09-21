@@ -22,7 +22,7 @@ app.post("/api/todo-list", (req, res) => {
   res.json(newTask);
 });
 
-const frontPath = path.join(__dirname, "docs");
+const frontPath = path.join(__dirname, "..", "docs");
 app.use(express.static(frontPath));
 
 app.get("/", (req, res) => {
